@@ -45,8 +45,8 @@ public class HomePanel extends JPanel {
 
         noteField = new JTextArea();
         noteList = new JPanel();
-        //Temporary
-        noteList.setBackground(Color.BLACK);
+
+        noteList.setBackground(Color.lightGray);
     }
 
 
@@ -61,12 +61,11 @@ public class HomePanel extends JPanel {
         cSignOutBtn = new GridBagConstraints();
         cSignOutBtn.gridy = 0;
         cSignOutBtn.gridx = 6;
-        cSignOutBtn.anchor = GridBagConstraints.FIRST_LINE_END;
+        //cSignOutBtn.anchor = GridBagConstraints.FIRST_LINE_END;
 
         cSortBtn = new GridBagConstraints();
         cSortBtn.gridy = 1;
         cSortBtn.gridx = 0;
-        cSortBtn.weighty = 0.1;
 
         cSortOptions = new GridBagConstraints();
         cSortOptions.gridy = 1;
@@ -76,7 +75,8 @@ public class HomePanel extends JPanel {
         cNoteList.gridy = 2;
         cNoteList.gridx = 0;
         cNoteList.gridheight = 5;
-        //cNoteList.weighty = 0.7;
+        cNoteList.gridwidth = 2;
+        cNoteList.weightx = 0.25;
         cNoteList.fill = GridBagConstraints.BOTH;
 
         cNoteField = new GridBagConstraints();
@@ -84,6 +84,8 @@ public class HomePanel extends JPanel {
         cNoteField.gridx = 2;
         cNoteField.gridwidth = 2;
         cNoteField.gridheight = 6;
+        cNoteField.weighty = 0.1;
+        cNoteField.weightx = 0.7;
         cNoteField.fill = GridBagConstraints.BOTH;
 
         cDiscardBtn = new GridBagConstraints();
@@ -93,5 +95,6 @@ public class HomePanel extends JPanel {
         cSaveBtn = new GridBagConstraints();
         cSaveBtn.gridy = 5;
         cSaveBtn.gridx = 6;
+        cSaveBtn.anchor = GridBagConstraints.LAST_LINE_END;
     }
 }
