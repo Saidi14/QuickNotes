@@ -6,14 +6,14 @@ import java.awt.*;
 public class ContentPane extends JPanel {
 
     private CardLayout cardLayout;
-    private JPanel loginPanel, registerPanel;
+    private JPanel loginPanel, registerPanel, homePanel;
 
     public ContentPane(){
         setComponents();
         this.setLayout(cardLayout);
 
         this.add(loginPanel, "login");
-        //this.add(, "home");
+        this.add(homePanel , "home");
         this.add(registerPanel, "register");
         cardLayout.show(this, "login");
     }
@@ -22,6 +22,7 @@ public class ContentPane extends JPanel {
         cardLayout = new CardLayout();
         loginPanel = new LoginPanel(this);
         registerPanel = new RegisterPanel(this);
+        homePanel = new HomePanel(this);
     }
 
     public void showLoginPanel(){

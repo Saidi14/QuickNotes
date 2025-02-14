@@ -15,8 +15,8 @@ public class LoginPanel extends JPanel {
         cLoginBtn, cLewUserBtn;
     ContentPane parent;
     
-    public LoginPanel(ContentPane setParent){
-        parent = setParent;
+    public LoginPanel(ContentPane parent){
+        this.parent = parent;
         setComponents();
         setConstraints();
         setActionListeners();
@@ -73,12 +73,7 @@ public class LoginPanel extends JPanel {
     }
 
     public void setActionListeners(){
-        newUserBtn.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("switch to registration panel");
-                parent.showRegisterPanel();
-            }
-        });
+        newUserBtn.addActionListener(e -> parent.showRegisterPanel());
+        loginBtn.addActionListener(e -> parent.showHomePanel());
     }
 }
