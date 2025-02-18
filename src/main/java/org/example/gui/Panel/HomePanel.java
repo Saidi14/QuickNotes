@@ -8,7 +8,7 @@ public class HomePanel extends JPanel {
     private JLabel welcomeText;
     private JButton sortBtn, signOutBtn, discardBtn, saveBtn;
     private JComboBox<String> sortOptions;
-    private JPanel noteList;
+    private JPanel panel1, titlePanel, panel2, panel3, contentPanel, noteListPanel;
     private JTextArea noteField;
     private GridBagLayout layout;
     private GridBagConstraints cWelcomeText, cSortBtn, cSignOutBtn, cDiscardBtn, cSaveBtn,
@@ -18,22 +18,27 @@ public class HomePanel extends JPanel {
     public HomePanel(ContentPane parent) {
         this.parent = parent;
         setComponents();
-        setConstraints();
         //setActionListeners();
-        setLayout(new GridBagLayout());
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(titlePanel);
+        add(contentPanel);
 
-        this.add(welcomeText, cWelcomeText);
-        this.add(signOutBtn, cSignOutBtn);
-        this.add(sortBtn, cSortBtn);
-        this.add(sortOptions, cSortOptions);
-        this.add(noteList, cNoteList);
-        this.add(noteField, cNoteField);
-        this.add(discardBtn, cDiscardBtn);
-        this.add(saveBtn, cSaveBtn);
     }
     //initialize home panel components
     private void setComponents(){
-        layout = new GridBagLayout();
+        titlePanel = new JPanel();
+        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
+        panel1 = new JPanel();
+        panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
+        panel2 = new JPanel();
+        panel3 = new JPanel();
+        panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
+        noteListPanel = new JPanel();
+        noteListPanel.setLayout(new BoxLayout(noteListPanel, BoxLayout.Y_AXIS));
+        contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+
+
         welcomeText = new JLabel("Welcome User");
         sortBtn = new JButton("Sort");
         signOutBtn = new JButton("Sign Out");
@@ -44,57 +49,22 @@ public class HomePanel extends JPanel {
         sortOptions = new JComboBox<>(options);
 
         noteField = new JTextArea();
-        noteList = new JPanel();
 
-        noteList.setBackground(Color.lightGray);
+        titlePanel.add(welcomeText);
+        titlePanel.add(signOutBtn);
+
+        panel1.add(sortOptions);
+        panel1.add(sortBtn);
+        panel1.add(noteListPanel);
+
+        panel2.add(noteField);
+
+        panel3.add(discardBtn);
+        panel3.add(saveBtn);
+
+        contentPanel.add(panel1);
+        contentPanel.add(panel2);
+        contentPanel.add(panel3);
     }
 
-
-    private void setConstraints(){
-        cWelcomeText = new GridBagConstraints();
-        cWelcomeText.gridy = 0;
-        cWelcomeText.gridx = 0;
-        cWelcomeText.gridwidth = 6;
-        //cWelcomeText.fill = GridBagConstraints.HORIZONTAL;
-        //cWelcomeText.anchor = GridBagConstraints.CENTER;
-
-        cSignOutBtn = new GridBagConstraints();
-        cSignOutBtn.gridy = 0;
-        cSignOutBtn.gridx = 6;
-        //cSignOutBtn.anchor = GridBagConstraints.FIRST_LINE_END;
-
-        cSortBtn = new GridBagConstraints();
-        cSortBtn.gridy = 1;
-        cSortBtn.gridx = 0;
-
-        cSortOptions = new GridBagConstraints();
-        cSortOptions.gridy = 1;
-        cSortOptions.gridx = 1;
-
-        cNoteList = new GridBagConstraints();
-        cNoteList.gridy = 2;
-        cNoteList.gridx = 0;
-        cNoteList.gridheight = 5;
-        cNoteList.gridwidth = 2;
-        cNoteList.weightx = 0.25;
-        cNoteList.fill = GridBagConstraints.BOTH;
-
-        cNoteField = new GridBagConstraints();
-        cNoteField.gridy = 1;
-        cNoteField.gridx = 2;
-        cNoteField.gridwidth = 2;
-        cNoteField.gridheight = 6;
-        cNoteField.weighty = 0.1;
-        cNoteField.weightx = 0.7;
-        cNoteField.fill = GridBagConstraints.BOTH;
-
-        cDiscardBtn = new GridBagConstraints();
-        cDiscardBtn.gridy = 5;
-        cDiscardBtn.gridx = 5;
-
-        cSaveBtn = new GridBagConstraints();
-        cSaveBtn.gridy = 5;
-        cSaveBtn.gridx = 6;
-        cSaveBtn.anchor = GridBagConstraints.LAST_LINE_END;
-    }
 }
