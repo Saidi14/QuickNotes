@@ -9,20 +9,16 @@ public class ContentPane extends JPanel {
     private JPanel loginPanel, registerPanel, homePanel;
 
     public ContentPane(){
-        setComponents();
+        cardLayout = new CardLayout();
         this.setLayout(cardLayout);
 
-        this.add(loginPanel, "login");
-        this.add(homePanel , "home");
-        this.add(registerPanel, "register");
-        cardLayout.show(this, "login");
-    }
-
-    public void setComponents(){
-        cardLayout = new CardLayout();
         loginPanel = new LoginPanel(this);
+        this.add(loginPanel, "login");
         registerPanel = new RegisterPanel(this);
+        this.add(registerPanel, "register");
         homePanel = new HomePanel(this);
+        this.add(homePanel , "home");
+        cardLayout.show(this, "login");
     }
 
     public void showLoginPanel(){

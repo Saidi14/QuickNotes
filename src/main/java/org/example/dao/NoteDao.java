@@ -3,10 +3,10 @@ package org.example.dao;
 import org.example.DBConnect.DbManager;
 import org.example.domain.Note;
 
-import javax.xml.transform.Result;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class NoteDao{
@@ -18,15 +18,16 @@ public class NoteDao{
     }
 
     public void create(Note note) {
-        String sql = "INSERT INTO NOTE (content, date, username)" +
-                "VALUES(?, ?, ?)";
+        String sql = "INSERT INTO NOTE (content, date, username, title)" +
+                "VALUES(?, ?, ?. ?)";
         db.connect();
 
         try {
             PreparedStatement ps = db.getConnecton().prepareStatement(sql);
             ps.setString(1, note.getContent());
-            ps.setString(3, note.getTimeTag());
-            ps.setString(1, note.getUserName());
+            ps.setString(2, note.getDate().toString());
+            ps.setString(3, note.getUserName());
+            ps.setString(4, note.getTitle());
 
             ps.executeUpdate();
 
@@ -37,10 +38,10 @@ public class NoteDao{
     }
 
     public Note retrieve(int noteId) {
-        String sql = "SELECT * FROM note " +
+        String sql = "SELECT (noteId, title, date, content, username) FROM note " +
                 "WHERE noteId = ?";
         db.connect();
-        Note note = new Note();
+        Note note = new Note.NoteBuilder().build();
 
         try{
             PreparedStatement ps = db.getConnecton().prepareStatement(sql);
@@ -48,13 +49,13 @@ public class NoteDao{
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                 note = new Note(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4)
-                );
-
+                 note = new Note.NoteBuilder()
+                         .setId(rs.getInt(1))
+                         .setTitle(rs.getString(2))
+                         .setDate(LocalDate.parse(rs.getString(3)))
+                         .setUsername(rs.getString(4))
+                         .setTitle(rs.getString(5))
+                         .build();
             }
 
         }catch (SQLException e){
@@ -77,11 +78,13 @@ public class NoteDao{
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                Note note = new Note(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4)
-                );
+                Note note = new Note.NoteBuilder()
+                        .setId(rs.getInt(1))
+                        .setTitle(rs.getString(2))
+                        .setDate(LocalDate.parse(rs.getString(3)))
+                        .setUsername(rs.getString(4))
+                        .setTitle(rs.getString(5))
+                        .build();
                 notes.add(note);
             }
         }catch (SQLException e){

@@ -1,5 +1,8 @@
 package org.example.gui.Panel;
 
+import org.example.db.DBUtil;
+import org.example.domain.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -75,6 +78,23 @@ public class RegisterPanel extends JPanel {
         returningUserBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                parent.showLoginPanel();
+            }
+        });
+        registerBtn.addActionListener(e -> {
+            if(usernameFld.getText().isBlank() || passwordFld.getText().isBlank())
+                JOptionPane.showMessageDialog(this,
+                        "Username and Password fields cannot be empty");
+            else{
+                DBUtil.registerUser(new User
+                        .UserBuilder()
+                        .setUsername(usernameFld.getText())
+                        .setPassword(passwordFld.getText())
+                        .build());
+                usernameFld.setText("");
+                passwordFld.setText("");
+                JOptionPane.showMessageDialog(this,"Registration Sucessful.\n" +
+                        "Redirecting to login screen");
                 parent.showLoginPanel();
             }
         });

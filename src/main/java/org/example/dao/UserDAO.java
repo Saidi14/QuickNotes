@@ -34,10 +34,9 @@ public class UserDAO{
     }
 
     public User retrieve(String username) {
-        String sql = "SELECT * FROM user " +
-                "WHERE username = ?";
+        String sql = "SELECT username, password FROM user WHERE username = ?";
         db.connect();
-        User user = new User();
+        User user = null;
 
         try{
             PreparedStatement ps = db.getConnecton().prepareStatement(sql);
@@ -45,11 +44,10 @@ public class UserDAO{
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                user = new User(
-                        rs.getString(1),
-                        rs.getString(2)
-                );
-
+                user = new User.UserBuilder()
+                        .setUsername(rs.getString(1))
+                        .setPassword(rs.getString(2))
+                        .build();
             }
 
         }catch (SQLException e){
