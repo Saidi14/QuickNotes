@@ -10,7 +10,11 @@ public class Note {
     private String title;
 
     private Note(NoteBuilder builder){
-
+        id = builder.id;
+        content = builder.content;
+        date = builder.date;
+        userName = builder.username;
+        title = builder.title;
     }
 
     public String getContent() {
