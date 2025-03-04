@@ -1,11 +1,12 @@
 package org.example.domain;
 
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Note {
     private int id;
     private String content;
-    private LocalDate date;
+    private Date date;
     private String userName;
     private String title;
 
@@ -50,11 +51,11 @@ public class Note {
         this.content = content;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -62,7 +63,7 @@ public class Note {
     public String toString() {
         return "Note{" +
                 "content='" + content + '\'' +
-                ", timeTag='" + date + '\'' +
+                ", timeTag='" + date.toString() + '\'' +
                 ", userName='" + userName + '\'' +
                 '}';
     }
@@ -70,7 +71,7 @@ public class Note {
         int id;
         String title;
         String content;
-        LocalDate date;
+        Date date;
         String username;
 
         public NoteBuilder setId(int id){
@@ -85,7 +86,8 @@ public class Note {
             this.content = content;
             return this;
         }
-        public NoteBuilder setDate(LocalDate date){
+        public NoteBuilder setDate(Date date){
+            SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
             this.date = date;
             return this;
         }

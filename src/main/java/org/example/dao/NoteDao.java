@@ -3,11 +3,15 @@ package org.example.dao;
 import org.example.DBConnect.DbManager;
 import org.example.domain.Note;
 
+import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class NoteDao{
 
@@ -18,21 +22,21 @@ public class NoteDao{
     }
 
     public void create(Note note) {
-        String sql = "INSERT INTO NOTE (content, date, username, title)" +
-                "VALUES(?, ?, ?. ?)";
+        String sql = "INSERT INTO note (content, date, username, title) VALUES(?, ?, ?, ?)";
         db.connect();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
             PreparedStatement ps = db.getConnecton().prepareStatement(sql);
             ps.setString(1, note.getContent());
-            ps.setString(2, note.getDate().toString());
+            ps.setString(2, df.format(note.getDate()));
             ps.setString(3, note.getUserName());
             ps.setString(4, note.getTitle());
 
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            JOptionPane.showMessageDialog(null, e);
         }
         db.close();
     }
@@ -42,6 +46,7 @@ public class NoteDao{
                 "WHERE noteId = ?";
         db.connect();
         Note note = new Note.NoteBuilder().build();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         try{
             PreparedStatement ps = db.getConnecton().prepareStatement(sql);
@@ -52,7 +57,7 @@ public class NoteDao{
                  note = new Note.NoteBuilder()
                          .setId(rs.getInt(1))
                          .setTitle(rs.getString(2))
-                         .setDate(LocalDate.parse(rs.getString(3)))
+                         .setDate(df.parse(rs.getString(3)))
                          .setUsername(rs.getString(4))
                          .setTitle(rs.getString(5))
                          .build();
@@ -60,6 +65,8 @@ public class NoteDao{
 
         }catch (SQLException e){
             System.out.println(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         db.close();
         return note;
@@ -81,7 +88,7 @@ public class NoteDao{
                 Note note = new Note.NoteBuilder()
                         .setId(rs.getInt(1))
                         .setTitle(rs.getString(2))
-                        .setDate(LocalDate.parse(rs.getString(3)))
+                        .setDate(new Date()) //TODO format correctly
                         .setUsername(rs.getString(4))
                         .setTitle(rs.getString(5))
                         .build();

@@ -1,8 +1,14 @@
 package org.example.gui.Panel;
 
+import org.example.db.DBUtil;
+import org.example.domain.Note;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public class HomePanel extends JPanel {
     ContentPane parent;
@@ -95,5 +101,15 @@ public class HomePanel extends JPanel {
     }
     public void addActionListeners(){
         signOutBtn.addActionListener(e -> parent.showLoginPanel());
+        saveBtn.addActionListener(e -> {
+            Note note = new Note.NoteBuilder()
+                    .setTitle(noteTitle.getText())
+                    .setUsername("Example")
+                    .setDate(new Date())
+                    .setContent(noteField.getText())
+                    .build();
+            DBUtil.saveNote(note);
+            JOptionPane.showMessageDialog(this, "Note Saved");
+        });
     }
 }
